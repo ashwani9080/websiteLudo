@@ -1,0 +1,55 @@
+html,body{
+    height: 100%;
+    width: 100%;
+    background-color: rgb(59, 57, 57);
+}
+
+.body{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+}
+
+.signup{
+    display: flex;
+    flex-direction: column;
+    background-color: gray;
+    margin: 2%;
+    padding: 5%;
+    border-radius: 2%;
+    box-shadow: 5px 5px 5px rgb(197, 196, 193);
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    
+}
+
+
+.signup label{
+    color: white;
+    font-size: 1rem;
+    margin-left: 3%;
+    margin-top: 1%;
+}
+.signup input{
+    margin-left: 3%;
+    margin-right: 3%;
+
+    border-radius: 10px;
+    margin-top: 1%;
+    padding: 2%;
+}
+
+button{
+
+  
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: rgb(7, 7, 7);
+    border: 0;
+    color: white;
+    margin: 2%;
+    padding: 1%;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}

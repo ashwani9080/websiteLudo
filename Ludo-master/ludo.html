@@ -1,0 +1,1223 @@
+<html>
+
+
+
+  <head>
+    <style>
+
+    *{
+
+        margin: 0px;
+
+    }
+
+
+
+    div{
+
+        margin: 0px;
+
+    }
+
+
+ .row_1_player1   span{
+        border-radius: 50%;
+        margin: 10px;
+        background-color: #ff4700;
+        float: left;
+        height: 80%;
+        width: 80%;
+    }
+    .row_1_player2   span{
+        border-radius: 50%;
+        margin: 10px;
+        background-color: green;
+        float: left;
+        height: 80%;
+        width: 80%;
+    }
+
+
+
+
+            html,body{
+
+                height:100%;
+
+                width: 100%;
+
+                background-color: indigo;
+
+
+
+            }
+
+            .main{
+
+                height:100%;
+
+                width: 100%;
+
+                background-color: indigo;
+
+            }
+
+            .score{
+
+                height: 15%;
+
+                width: 100%;
+
+                background-color: rgb(156, 154, 154);
+
+                float: left;
+
+
+            }
+
+            .score div{
+
+                display: flex;
+
+                float: left;
+
+                height: 98%;
+                font-size: 30px;
+
+                overflow: hidden;
+
+                text-align: center;
+
+                align-items: center;
+
+                justify-content: center;
+
+
+            }
+
+
+
+            .score_1,.score_2{
+                                border-radius: inherit;
+                              border-radius: 30px;
+            }
+
+
+
+            .dice section:hover{
+
+                color: white;
+                font-size: 50px;
+            }
+
+
+
+            .game{
+
+                /* position: absolute;
+                top: 25%;
+                left: 22%;
+                height: 70%; */
+                width: 60%;
+                float: left;
+                /* margin: auto; */
+                padding-left: 20px;
+                flex: 3;
+
+            }
+
+           
+
+        .row_1{
+
+            width: 100%;
+
+            height: 33%;
+
+            display: grid;
+
+            grid-template-columns: 32% 32% 32%;
+            overflow: hidden;
+
+        }
+
+        .row_1 > div{
+
+            /* background-color: tomato; */
+
+            border: 5px solid whitesmoke;
+
+            float: left;
+
+        }
+
+        .row_1_player1 , .row_1_player2{
+
+            display: grid;
+
+            grid-template-columns: 50% 50%;
+
+            grid-template-rows: 50% 50%;
+
+
+
+        
+
+        }
+
+
+
+        .row_1_player1 > div{
+
+            float: left;
+
+            background-color: yellow;
+
+            border: 1px solid black;
+            overflow: hidden;
+
+
+
+        }
+
+        .row_1_player2 > div{
+
+            float: left;
+            background-color: #30f90c;
+            border: 1px solid black;
+            overflow: hidden;
+
+        }
+
+
+
+        .row_1_Three_div{
+
+            display: grid;
+
+            height: auto;
+
+            width: 100%;
+
+            grid-template-columns: 33% 33% 33%;
+
+
+
+        }
+
+
+
+        .row_1_Three_div > div{
+
+            float: left;
+
+
+        }
+
+
+
+     .six_row{
+
+         height: 100%;
+         background-color: white;       
+
+         display: grid;
+
+         grid-template-rows: 16.4% 16.6% 16.6% 16.6% 16.6% 16.6%;
+
+     }
+
+     .six_row div{
+
+         float: left;
+         border: 1px solid black;
+
+     }
+
+
+     .six_column{
+        float: left;
+        display: grid;
+        background-color: white;
+        grid-template-columns: 16.4% 16.6% 16.6% 16.6% 16.6% 16.6%;
+        width: 100%;
+        height: 33%;
+
+     }
+
+     .six_column > div{
+          border:1px solid black;
+     }
+
+
+
+     .userData{
+
+        background-color: black;
+        height: 100%;
+        width: 100%;
+        display: flex;
+
+     }
+
+
+     #Profile{
+
+        height: 200px;
+        width: 200px;
+        border-radius: 50%;
+        background-color: darkgray;
+
+
+     }
+
+
+
+
+
+
+    </style>
+
+  </head>
+
+  <body>
+
+    
+    <div class="main">
+
+
+        
+
+         <div class="score">
+
+            <div  id="score1" class="score_1" style="width: 24%;  font-weight: bold;  background-color: antiquewhite; border: 0.1px solid black;">
+
+            PLAYER 1: 0
+
+            </div>
+
+            <div class="dice" style="width: 48%; font-size: 40px;; color: indigo;  font-weight: bold;
+
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+
+            <section onclick="SuspenceTheDice()"> ROLL THE DICE</section>
+
+            </div>
+
+            <div id="score2" class="score_2" style="width: 24%; font-weight: bold; float:right;background-color: antiquewhite; border: 0.1px solid black;">
+
+            PLAYER 2: 0
+
+            </div>
+
+         </div>
+
+
+<div class="userData" >
+
+        <div  class="show" id="userDetails" style="background-color: blueviolet; display: flex;
+         flex: 1; flex-direction: column; align-items: center;">
+            <div  style="font-size: 2em; background-color: crimson;
+            margin:10px;"><span id="uname" name="userdata">USERNAME</span></div>
+            <div id="Profile"><span ></span></div>
+        </div>
+
+
+
+         <div class="game">
+
+             <!--ROW1 FOR THE PLAYER-->
+
+            <div class="row_1">
+
+                <div class="row_1_player1">
+
+                    <div class="p11"><span id="p11" onclick="MoveIt(this)" ></span></div>
+
+                    <div class="p12"><span id="p12" onclick="MoveIt(this)"></span></div>
+
+                    <div class="p13"><span id="p13" onclick="MoveIt(this)"></span></div>
+
+                    <div class="p14"><span  id="p14" onclick="MoveIt(this)"></span></div>
+
+
+
+                </div>
+
+                <div class="row_1_Three_div">
+
+                    <div   id="first_column" class="six_row">
+
+                        <div id="12"></div>
+
+                        <div id="11"></div>
+
+                        <div id="10"></div>
+
+                        <div id="9"></div>
+
+                        <div id="8"></div>
+
+                        <div id="7"></div>
+
+                    </div>
+
+
+
+                    <div id="second_column" class="six_row" style="background-color: #30f90c;">
+
+                        <div  id="13" style="background-color: white;"></div>
+
+                        <div id="g1"></div>
+
+                        <div id="g2"></div>
+
+                        <div id="g3"></div>
+
+                        <div id="g4"></div>
+
+                        <div id="g5"></div>
+
+                    </div>
+
+     
+
+                    <div id="three_column" class="six_row">
+
+                        <div id="14" style="background-color: #30f90c;"></div>
+
+                        <div id="15"></div>
+
+                        <div id="16"></div>
+
+                        <div id="17"></div>
+
+                        <div id="18"></div>
+
+                        <div id="19"></div>
+
+                    </div>
+
+        
+
+
+
+
+
+                </div>
+
+                <div class="row_1_player2">
+
+                        <div class="p21"><span id="p21" onclick="MoveIt(this)"></span></div>
+
+                        <div class="p22"><span   id="p22" onclick="MoveIt(this)"></span></div>
+
+                        <div class="p23"><span  id="p23" onclick="MoveIt(this)"></span></div>
+
+                        <div class="p24"><span  id="p24" onclick="MoveIt(this)"></span></div>
+
+    
+
+                </div>
+
+
+
+
+
+            </div>
+
+
+
+
+
+            <!--ROW2-->
+
+
+           <div class="row_1">
+
+                <!--SIX columns-->
+                <div>
+                    <div   id="forth_column" class="six_column">
+                        <div id="1" style="background-color: yellow;"></div>
+                        <div id="2"></div>
+                        <div id="3"></div>
+                        <div id="4"></div>
+                        <div id="5"></div>
+                        <div id="6"></div>
+                    </div>
+                    <div id="fifth_column" class="six_column" style="background-color: yellow;">
+                        <div  id="52" style="background-color: white;"></div>
+                        <div id="y1"></div>
+                        <div id="y2"></div>
+                        <div id="y3"></div>
+                        <div id="y4"></div>
+                        <div id="y5"></div>
+                    </div>
+                     <div id="sixth_column" class="six_column">
+                        <div id="51"></div>
+                        <div id="50"></div>
+                        <div id="49"></div>
+                        <div id="48"></div>
+                        <div id="47"></div>
+                        <div id="46"></div>
+                    </div>            
+
+                 </div>   
+                 <!--WINING POSITION/-->
+                 <div id="w6" style="text-align: center;">
+                    <img onclick="SuspenceTheDice()" id="dice" 
+                 alt ="PLAY" 
+                    style="background-color: purple;
+                    background-color: white;
+                 background-repeat: no-repeat;  float: left; height: 80%; width:43%; border-radius: 18px; position: relative;top: 10%;left: 30%;
+                 ">
+
+                     </img>   
+
+
+
+                 </div>
+                 
+                 <!--SIX COLUMN-->   
+
+                 <div>
+                    <div>
+                    <div id="seven_column" class="six_column">
+                        <div id="20"></div>
+                        <div id="21"></div>
+                        <div id="22"></div>
+                        <div id="23"></div>
+                        <div id="24"></div>
+                        <div id="25"></div>
+                    </div>
+                    <div  id="eighth_column" class="six_column">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div id="26"></div>
+                    </div>
+                     <div  id="nine_column" class="six_column">
+                        <div id="32"></div>
+                        <div id="31"></div>
+                        <div id="30"></div>
+                        <div id="29"></div>
+                        <div id="28"></div>
+                        <div id="27"></div>
+                    </div>            
+
+                 </div>   
+
+
+                 </div>   
+
+
+
+
+
+
+
+           </div>
+
+
+
+          
+            <!--ROW3-->
+
+            <div class="row_1" style="float:left">
+
+
+
+                <div>
+
+
+
+                </div>
+
+                 <div class="row_1_Three_div">
+
+                    <div   id="tenth_column" class="six_row">
+
+                        <div id="45"></div>
+
+                        <div id="44"></div>
+
+                        <div id="43"></div>
+
+                        <div id="42"></div>
+
+                        <div id="41"></div>
+
+                        <div id="40"></div>
+
+                    </div>
+
+
+
+                    <div  id="eleventh_column" class="six_row">
+
+                        <div></div>
+
+                        <div></div>
+
+                        <div></div>
+
+                        <div></div>
+
+                        <div></div>
+
+                        <div id="39"></div>
+
+                    </div>
+
+     
+
+                    <div  id="twelth_column"  class="six_row">
+
+                        <div id="33"></div>
+
+                        <div id="34"></div>
+
+                        <div id="35"></div>
+
+                        <div id="36"></div>
+
+                        <div id="37"></div>
+
+                        <div id="38"></div>
+
+                    </div>
+
+        
+
+
+
+
+
+                </div>
+
+                <div>
+
+
+
+                </div>
+
+                
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+         </div>
+
+         </div>
+
+
+
+
+
+    </div>
+
+  </body>
+
+  <script type="text/javascript">
+    
+    var c=0;
+    let player1=true;
+    var player1Token=4;
+    var player2Token=4;
+    var winYellow=0;
+    var winGreen=0;
+    var diceNumber=0;
+    var player1Tokens=['p11','p12','p13','p14'];
+    var player2Tokens=['p21','p22','p23','p24'];
+    let  SuspenceTheDice=()=>{
+        let diceId=document.getElementById('dice');
+        diceId.onclick=null;
+        console.log('clicked');
+
+            if (diceNumber===0)
+                 deleteInterval=setInterval(rollTheDice,200);
+            else
+                window. alert("Player hasn't moved ");
+        
+     
+    }
+
+  
+    let rollTheDice=()=>{
+              let diceId=document.getElementById('dice');
+            let diceImage={
+                1:"rsz_1.png",
+                2:"rsz_2.png",
+                3:"rsz_3.png",
+                4:"rsz_4.png",
+                5:"rsz_5.png",
+                6:"rsz_6.png",
+            }
+           
+            c+=1;
+
+             diceNumber=Math.floor(Math.random()*6)+1;
+
+             dice.setAttribute("src",diceImage[diceNumber]);
+           
+            if(c >= 12){
+            diceId.onclick=SuspenceTheDice;
+            clearInterval(deleteInterval);
+            console.log(c);
+            chancePlay();
+            c=0;    
+           }
+        
+       
+          
+          
+           
+    }  
+
+
+   //code for the chance of the player
+    let chancePlay=()=>{
+
+        let score1=document.getElementById('score1');
+        let score2=document.getElementById('score2');
+        if(player1){
+            console.log("player1:"+diceNumber);
+           // player1=false;
+            score1.style.fontSize="25px";
+            score1.style.backgroundColor="white";
+            score2.style.backgroundColor="red"; 
+            score2.style.fontSize="30px";
+            player1Chance();
+        }else{
+         console.log("player2:"+diceNumber);
+       //  player1=true;
+         score1.style.fontSize="30px";
+         score2.style.fontSize="25px";  
+         score2.style.backgroundColor="white"; 
+         score1.style.backgroundColor="red";
+
+          player2Chance();
+        }
+
+
+    }
+
+        let player1Chance=()=>{
+
+            //diceNumber=6;
+            let span=null;
+
+                if((player1Token===3) && (diceNumber<6)){
+
+                    span=document.getElementById('p1'+(player1Token+1));
+                    if((parseInt(span.parentElement.id)+diceNumber)<=52){
+                        document.getElementById(''+(parseInt(span.parentElement.id)+diceNumber)).appendChild(span);
+                    }
+                    else if((span.parentElement.id==='y1'||span.parentElement.id==='y2'||span.parentElement.id==='y3'||span.parentElement.id==='y4'||span.parentElement.id==='y5')){
+                      
+                        console.log("safezone"+span.parentElement.id);
+                        let check=parseInt((span.parentElement.id)[1])+diceNumber;
+                        if(check<=5){
+                            document.getElementById('y'+check).appendChild(span);
+                         }
+                         else if(6-parseInt((span.parentElement.id)[1])>=diceNumber){
+
+                            if( diceNumber===(6-parseInt((span.parentElement.id)[1])) ){
+                                document.getElementById('w'+6).appendChild(span);
+                                
+                                winYellow+=1;
+                                score1.innerText="Player 1:"+winYellow;
+                            }else{
+                                document.getElementById('y'+(parseInt((span.parentElement.id)[1])+diceNumber )).appendChild(span);
+                            }
+
+                         }
+                       
+                        
+                    }  
+                    else{
+                         if(((parseInt(span.parentElement.id)+diceNumber)%52)===6){
+                            document.getElementById('w'+6).appendChild(span);
+                            
+                            winYellow+=1;
+                            score1.innerText="Player 1:"+winYellow;
+                         }else{
+
+                        document.getElementById('y'+((parseInt(span.parentElement.id)+diceNumber)%52)).appendChild(span);
+
+                         }
+                    }
+
+                    diceNumber=0;
+                    player1=false;
+                    TokenGoBackToHome(document.getElementById('p14'));
+                }
+
+              else if(diceNumber===6 && player1Token)
+                {
+                   // player1Tokens.pop(player1Tokens.indexOf('p1'+player1Token));
+
+
+                    span=document.getElementById(''+player1Tokens.pop());
+                    
+                    player1Token-=1;
+                    span.setAttribute('style','margin-top:10%;margin-left:10%;float:left;height:20px;width:20px;background-color:red;border-radius:50%');
+                    document.getElementById('1').appendChild(span);
+                    diceNumber=0;
+                    player1=false;}
+                 else if(diceNumber!==6 && player1Token===4){
+                        diceNumber=0;
+                      player1=false;
+                   
+                    }
+
+
+
+                    if(winYellow===4){
+                       
+                       let check=window.confirm('Player1 has won');
+                       if(check)
+                            window.location.reload();
+
+                        
+                    }
+
+               
+        }
+
+        let player2Chance=()=>{
+
+                let span=null;
+                
+               
+             if((player2Token===3) && (diceNumber<6)){
+               
+                span=document.getElementById('p2'+(player2Token+1));
+                let position_green= (document.getElementById('p2'+(player2Token+1)).parentElement.id);
+                console.log('position: '+parseInt(position_green)); 
+                
+                if(parseInt(position_green+diceNumber)<14){
+
+                    console.log("come between 1 to 14");
+                    
+                    document.getElementById(''+ ( parseInt(position_green)+diceNumber ) ).appendChild(span);
+
+
+                }
+                else if( ( parseInt(position_green)>=1 && parseInt(position_green)<14 ) || (position_green[0]==='g') ){
+
+                    console.log('1-14 '+ (parseInt(position_green)+diceNumber) );
+                    if(parseInt( position_green )===13){
+
+                        document.getElementById('g'+diceNumber).appendChild(span);
+
+
+                    }else{
+
+                       let new_position=span.parentElement.id;
+
+                       if( (new_position==='g1')||(new_position==='g2')||(new_position==='g3')||(new_position==='g4')||(new_position==='g5')){
+
+                            console.log('g: '+new_position);
+                            let check=parseInt((new_position)[1])+diceNumber;
+                        if(check<=5){
+                            document.getElementById('g'+check).appendChild(span);
+                         }
+                         else if(6-parseInt(new_position[1])>=diceNumber){
+
+                            if( diceNumber===(6-parseInt(new_position[1])) ){
+                                document.getElementById('w'+6).appendChild(span);
+                                winGreen+=1;
+                                
+                                score2.innerText="Player 2:"+winGreen;
+                            }else{
+                                document.getElementById('g'+(parseInt(new_position[1])+diceNumber )).appendChild(span);
+                            }
+
+                         }
+                       
+
+
+
+
+                       }else if( ( parseInt(new_position)+diceNumber ) <14 ){
+                        console.log('between 1-14'+new_position);
+
+                           document.getElementById(''+(parseInt(new_position)+diceNumber)).appendChild(span);
+                        
+                        
+                       }else{
+
+                            document.getElementById(  'g'+( parseInt(new_position)+diceNumber-13 )  ).appendChild(span);
+
+                       }
+
+
+                    }
+
+
+                }
+                
+                
+                else {
+
+                    if(parseInt( position_green)+diceNumber<52){
+                        console.log('position in 52 '+(parseInt(position_green)+diceNumber))
+                        document.getElementById(''+ ( parseInt(position_green)+diceNumber ) ).appendChild(span);
+                    }else{
+
+                            if(parseInt(position_green)+diceNumber-52 === 0 )
+                                diceNumber+=1;
+
+                        document.getElementById(''+((parseInt(position_green)+diceNumber)-52) ).appendChild(span);
+
+                    }
+
+
+                }
+                diceNumber=0;
+                player1=true;
+                TokenGoBackToHome(document.getElementById('p24'));
+
+                }
+                    
+                else if(diceNumber===6 && player2Token)
+                {                         
+                  //  player2Tokens.pop(player2Tokens.indexOf('p2'+player2Token));
+
+                    span=document.getElementById(player2Tokens.pop());
+
+                    player2Token-=1;
+                    span.setAttribute('style','margin-top:10%;margin-left:10%;float:left;height:20px;width:20px;background-color:green;border-radius:50%');
+                    document.getElementById('14').appendChild(span);
+                    diceNumber=0;
+                    player1=true;
+
+                 }
+                else if(diceNumber!==6 && player2Token===4){
+                        diceNumber=0;
+                        player1=true;
+                   
+                    }
+
+              
+              
+                    //check win or not
+                    if(winGreen===4){
+                       
+                       let check=window.confirm('Player2 has won');
+                       if(check)
+                            window.location.reload();
+
+                        
+                    }
+
+        
+            
+        }
+
+
+        let MoveIt=(ths)=>{
+            var span=ths;
+            var id_span=ths.id;
+            var id_parent=ths.parentElement.id;
+            console.log("MOve It"+id_parent,id_span,player1);
+            //player1 gameplay is here
+            if((id_span==='p11' || id_span==='p12' ||id_span==='p13'|| id_span==='p14') && (player1)  && (player1Token<=3) ){
+
+                if( (parseInt(span.parentElement.id)+diceNumber) >52){
+                    var safezone=(parseInt(span.parentElement.id)+diceNumber)-52;
+                    document.getElementById('y'+safezone).appendChild(span);
+
+                    console.log("safezone:"+(parseInt(span.parentElement.id)+diceNumber)-52);
+                    
+                    player1=false;
+                    diceNumber=0;
+              
+
+                   }else if((id_parent==='y1'||id_parent==='y2'||id_parent==='y3'||id_parent==='y4'||id_parent==='y5')){
+                   
+                    let check=parseInt((id_parent)[1])+diceNumber;
+                         if(check<=5){
+                            document.getElementById('y'+check).appendChild(span);
+
+                    player1=false;
+                    diceNumber=0;
+              
+                         }
+                         else if(6-parseInt((span.parentElement.id)[1])>=diceNumber){
+
+                            if( diceNumber===(6-parseInt((id_parent)[1])) ){
+                                document.getElementById('w'+6).appendChild(span);
+                                
+                                winYellow+=1;
+                                score1.innerText="Player 1:"+winYellow;
+
+                    player1=false;
+                    diceNumber=0;
+              
+                            }else{
+                                document.getElementById('y'+(parseInt((id_parent)[1])+diceNumber )).appendChild(span);
+
+                    player1=false;
+                    diceNumber=0;
+              
+                            }
+
+                        }
+                    
+                }else if((parseInt(span.parentElement.id)+diceNumber) <= 52){
+
+                    document.getElementById(''+(parseInt(span.parentElement.id)+diceNumber)).appendChild(span);
+
+                    player1=false;
+                    diceNumber=0;
+              
+
+
+                }
+                 else{
+                         if(((parseInt(span.parentElement.id)+diceNumber)%52)===6){
+                            document.getElementById('w'+6).appendChild(span);
+                            winYellow+=1;
+                            score1.innerText="Player 1:"+winYellow;
+                            
+
+                    player1=false;
+                    diceNumber=0;
+              
+                         }else{
+
+                        document.getElementById('y'+((parseInt(span.parentElement.id)+diceNumber)%52)).appendChild(span);
+
+                    player1=false;
+                    diceNumber=0;
+              
+
+                         }
+                    }
+
+
+
+            }
+            //player2 gameplay is here
+            else if((id_span==='p21' || id_span==='p22' ||id_span==='p23'|| id_span==='p24') && !(player1)  && (player2Token<=3)){
+                
+                span=ths;
+                let position_green= span.parentElement.id;
+                console.log('position: '+parseInt(position_green)); 
+                
+                if(parseInt(position_green+diceNumber)<14){
+
+                    console.log("come between 1 to 14");
+                    
+                    document.getElementById(''+ ( parseInt(position_green)+diceNumber ) ).appendChild(span);
+
+                player1=true;
+                diceNumber=0;
+
+
+
+
+                }
+                else if( ( parseInt(position_green)>=1 && parseInt(position_green)<14 ) || (position_green[0]==='g') ){
+
+                    console.log('1-14 '+ (parseInt(position_green)+diceNumber) );
+                    if(parseInt( position_green )===13){
+
+                        document.getElementById('g'+diceNumber).appendChild(span);
+
+                player1=true;
+                diceNumber=0;
+
+
+
+
+                    }else{
+
+                       let new_position=span.parentElement.id;
+
+                       if( (new_position==='g1')||(new_position==='g2')||(new_position==='g3')||(new_position==='g4')||(new_position==='g5')){
+
+                            console.log('g: '+new_position);
+                            let check=parseInt((new_position)[1])+diceNumber;
+                        if(check<=5){
+                            document.getElementById('g'+check).appendChild(span);
+
+                player1=true;
+                diceNumber=0;
+
+
+                         }
+                         else if(6-parseInt(new_position[1])>=diceNumber){
+
+                            if( diceNumber===(6-parseInt(new_position[1])) ){
+                                document.getElementById('w'+6).appendChild(span);
+                                winGreen+=1;
+                                
+                                score2.innerText="Player 2:"+winGreen;
+
+                player1=true;
+                diceNumber=0;
+
+
+                            }else{
+                                document.getElementById('g'+(parseInt(new_position[1])+diceNumber )).appendChild(span);
+
+                player1=true;
+                diceNumber=0;
+
+
+                            }
+
+                         }
+                       
+
+
+
+
+                       }else if( ( parseInt(new_position)+diceNumber ) <14 ){
+                        console.log('between 1-14'+new_position);
+
+                           document.getElementById(''+(parseInt(new_position)+diceNumber)).appendChild(span);
+
+                player1=true;
+                diceNumber=0;
+
+
+                        
+                        
+                       }else{
+
+                            document.getElementById(  'g'+( parseInt(new_position)+diceNumber-13 )  ).appendChild(span);
+
+                player1=true;
+                diceNumber=0;
+
+
+
+                       }
+
+
+                    }
+
+
+                }
+                
+                
+                else {
+
+                    if(parseInt( position_green)+diceNumber<=52){
+                        console.log('position in 52 '+(parseInt(position_green)+diceNumber))
+                        document.getElementById(''+ ( parseInt(position_green)+diceNumber ) ).appendChild(span);
+
+                player1=true;
+                diceNumber=0;
+
+
+                    }else{
+
+                        document.getElementById(''+((parseInt(position_green)+diceNumber)-52) ).appendChild(span);
+
+                player1=true;
+                diceNumber=0;
+
+
+
+                    }
+
+
+                }
+
+             
+
+            }
+
+
+            TokenGoBackToHome(ths);
+
+        }
+
+
+     let TokenGoBackToHome=(ths)=>{
+
+
+      if(ths.parentElement.id!='w6'){   
+        let child=ths;
+        let parent=ths.parentElement;
+        let childrens=[];
+        // let attribute=document.createAttribute('style');
+        // attribute.nodeValue='border-radius: 50%;margin: 10px;float: left;height: 80%; width: 80%;'
+
+
+        for(var i=0;i<parent.childElementCount;i++){
+	       childrens[i]= parent.children[i].id; 
+           console.log(childrens[i]);
+           console.log("make array "+childrens);
+            }
+       
+
+        if(childrens.length!==0){
+            for(i of childrens){
+                if(i[1]!==child.id[1]){
+                    document.getElementsByClassName(''+i)[0].appendChild(document.getElementById(''+i)  );
+                    document.getElementById(''+i).setAttribute('style','height:80%;width:80%;');
+     
+                    console.log("take back "+i);
+
+                    if(i[1]==='1'){
+                        
+                        player1Token+=1;
+                        if(winYellow!==0){    
+                            winYellow-=1;
+                            document.getElementById('score_1').innerHTML=""+winYellow;
+                        }
+                        player1Tokens.push(i);
+
+                    }else if(i[1]==='2'){
+                       
+                        player2Token+=1;
+                        if(winGreen!==0){    
+                            winGreen-=1;
+                            document.getElementById('score_2').innerHTML=""+winGreen;
+                          
+                        }
+                        player2Tokens.push(i);
+                    }
+                }
+
+
+
+            }
+
+        }
+
+            document.getElementById('dice').onclick=SuspenceTheDice;
+            console.log('token 1'+player1Tokens);
+            console.log('token 2'+player2Tokens);
+
+}
+
+     }
+
+
+
+
+  </script>
+
+
+
+
+
+</html>
