@@ -3,6 +3,9 @@ const keys=require('./keys');
 const passport=require('passport');
 const GoogleStrategy=require('passport-google-oauth20');
 const mongoose=require('mongoose');
+const sendmail=require('./sendMail');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 /*---login function for the user  called in router-------*/  
  let Login=(data)=>{
@@ -77,6 +80,16 @@ const mongoose=require('mongoose');
                   return false;
        
                }else{
+
+                const msg = {
+                    to: data.email,
+                    from: 'ashwani9080singh@gmail.com',
+                    subject: 'Test verification email',
+                    html: sendmail.emailTemplate,
+                
+                  }
+                  sendMail(msg);
+                
        
                  console.log("user created : "+result);
                  res.sendFile(__dirname+'/public/login.html');
@@ -138,6 +151,20 @@ const mongoose=require('mongoose');
         })
     );
 
-module.exports={Validate,CreateUser,Login,passport,GoogleStrategy};
+//send mail
+    const sendMail = async (msg) => {
+        try {
+          sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+          return sgMail.send(msg)
+        } catch (error) {
+          throw new Error(error.message)
+        }
+      }
+      
+   
+
+
+
+module.exports={Validate,CreateUser,Login,passport,GoogleStrategy,sendMail};
     
 //AIzaSyD32VrRDm-7bz2CynW6iymk0QFwRHHDQd8

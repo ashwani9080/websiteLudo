@@ -56,7 +56,8 @@ router.get('/',(req,res)=>{
 
 router.post("/adduser", upload.single('pic'),(req,res,next)=>{
 
-  userapi.Validate(req.body,req,res);    
+  userapi.Validate(req.body,req,res);  
+  next();  
     
 });
 
@@ -76,8 +77,21 @@ router.post("/adduser", upload.single('pic'),(req,res,next)=>{
 
   router.get('/ludo',(req,res)=>{
     res.sendFile(__dirname+"/Ludo-master/ludo.html"); 
+    
+  });
 
-  })
+
+  router.post('/adduser', async (req, res) => {
+    try {
+      const sent = await userapi.sendMail()
+      if (sent) {
+        res.send({ message: 'email sent successfully' })
+      }
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  });
+
 
 module.exports=router;
 

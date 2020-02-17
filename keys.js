@@ -4,5 +4,7 @@ module.exports={
     clientSecret:'jQ8V5_voNgVuOepmhN9qzzmt'
     }, session:{
         cookieKey:'mykeys'
+    },sendmail:{
+        apiKeys:'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'
     }
 }
