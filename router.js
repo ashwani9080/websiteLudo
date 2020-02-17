@@ -30,9 +30,9 @@ const authCheck=(req,res,next)=>{
   }
 }
 
-router.post("/login",authCheck,async (req,res,next)=>{
+router.post("/login",async (req,res,next)=>{
   try{
-      console.log("req.body",req.body)
+
   let resultfromlogin = await userapi.Login(req.body);
       if(resultfromlogin){
            res.sendFile(__dirname+"/Ludo-master/ludo.html"); 
@@ -68,9 +68,16 @@ router.post("/adduser", upload.single('pic'),(req,res,next)=>{
   
 
   router.get('/auth/google/redirect/',userapi.passport.authenticate('google'),(req,res)=>{
-    res.sendFile(__dirname+"/Ludo-master/ludo.html"); 
+
+    res.redirect( `/ludo?origin=${req.originalUrl}`);
+
   });
 
+
+  router.get('/ludo',(req,res)=>{
+    res.sendFile(__dirname+"/Ludo-master/ludo.html"); 
+
+  })
 
 module.exports=router;
 
