@@ -1,6 +1,7 @@
 const express=require('express');
 const router=express.Router();
 var path    = require("path");
+var qs = require('query-string');
 var multer  = require('multer');
  var storage = multer.diskStorage({
      destination: function (req, file, cb) {
@@ -30,9 +31,33 @@ const authCheck=(req,res,next)=>{
   }
 }
 
+
+
+router.get('/verify',async (req,res)=>{
+ 
+    console.log(req.query.email);
+
+    try{
+
+      let result=await userapi.updateVerified(req.query.email);
+      if(result){
+        res.send('verified updated');
+      }else{
+        res.send('error');
+      }
+    }catch(err){
+
+      res.send(err);
+    }
+
+
+
+});
+
 router.post("/login",async (req,res,next)=>{
   try{
   let resultfromlogin = await userapi.Login(req.body);
+
       if(resultfromlogin){
            res.sendFile(__dirname+"/Ludo-master/ludo.html"); 
           }else{
@@ -50,19 +75,32 @@ router.post("/login",async (req,res,next)=>{
 
 
 router.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname + '/public/website.html'));
+
+  res.sendFile(path.join(__dirname + '/public/website.html'));
 
 });
 
 
-router.post("/adduser", upload.single('pic'),(req,res,next)=>{
+router.post("/adduser", upload.single('pic'), async (req,res)=>{
+  try{
+    let checkValidated= await userapi.Validate(req.body,req,res);
 
-  userapi.Validate(req.body,req,res);  
+     if(checkValidated){
+       console.log('adduser'+checkValidated);
+       res.sendFile(__dirname+"/public/login.html");
+      }else{
+        console.log('adduser'+checkValidated);
+      }
+  }catch(err){
+
+    res.send(err);
   
-    
+    }
+  
 });
 
-  router.get('/googleapi',  userapi.passport.authenticate('google',{ 
+
+ router.get('/googleapi',  userapi.passport.authenticate('google',{ 
     scope:['profile']
 
   }));
@@ -102,7 +140,7 @@ router.post("/adduser", upload.single('pic'),(req,res,next)=>{
     if(sent)
       res.send({ message: 'email sent successfully' });
     }catch(err){
-      res.send(err);
+      throw new Error(error.message)
     }
   })
 

@@ -7,6 +7,7 @@ lastName:{type:String},
 phone:{type:String},
 password:{type:String},
 pic:{type:String},
+verified:{type:Boolean},
 googleId:{type:String},
 },{ versionKey: false });
 

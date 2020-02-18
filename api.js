@@ -1,9 +1,11 @@
 var userdb = require("./userscheam");
+const MailGen = require('mailgen')
 const keys=require('./keys');
 const passport=require('passport');
 const GoogleStrategy=require('passport-google-oauth20');
 const nodemailer=require('nodemailer');
 const mongoose=require('mongoose');
+
 /*************sendgrid configuration is here******************/
 const sendmail=require('./template');
 const sgMail = require('@sendgrid/mail');
@@ -11,12 +13,22 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const msg = {
-    to: 'nancy@daffodilsw.com',
-    from: 'ashwani8090singh@gmail.com',
+    to: '',
+    from: 'ashwani9080singh@gmail.com',
     subject: 'Test verification email',
     html: sendmail.emailTemplate,
 
   }
+
+
+  const mailOptions = {
+    to: '',
+    from: 'ashwani9080singh@gmail.com',
+    subject: 'Test verification email',
+    html: sendmail.emailTemplate,
+    text: 'Hey this is ashwani sent you mail to check  nodemailer ', 
+};
+  
 
 /*************node mailer configuration is here******************/
 
@@ -36,7 +48,7 @@ var transport = nodemailer.createTransport({
     
         console.log("user log: "+data.uname);
     
-        userdb.find({'email':''+data.uname,'password':data.psw},'email',(err,email)=>{
+        userdb.find({'email':''+data.uname,'password':data.psw,'verified':true},'email',(err,email)=>{
     
             if(err) {
                 console.log(err);
@@ -44,19 +56,14 @@ var transport = nodemailer.createTransport({
             }
             else {
                 if(email.length===1){
-                 console.log("SUCCESSFULLY  LOOGED IN ");
-              
-               resolve(true);
+                 console.log("SUCCESSFULLY  LOOGED IN "); 
+                   resolve(true);
                     }
-                else{
-                
+                else{ 
                     console.log("INVALID PASSWORD ");}
                     reject(false);
-              }
-                
+              } 
             });
-    
-    
     })
     
     
@@ -66,53 +73,69 @@ var transport = nodemailer.createTransport({
 
   let   Validate=(data,req,res)=>{
 
-        console.log("user details: "+data.email);
-        data.pic=req.file.originalname;
-          
-           userdb.find({'email':''+data.email},'email',(err,email)=>{
-       
-           if(err) {
-               console.log(err);}
-           else {
-               if(email.length===0){
-                   return CreateUser(data,res);
-       
-               }
-               else{
-                   res.send('user alreay exists');
-                   console.log("already exist: "+email.length);
-                   return false;
-               }
-       
-             }
-                  
-       
-           });
-          
+      return  new Promise((resolve,reject)=>{
+            data.pic=req.file.originalname;
+            userdb.find({'email':''+data.email},'email',(err,email)=>{
+            if(err) {
+                console.log(err);
+            }
+            else {
+                if(email.length===0){
+                 
+                    sendmail.email.body.action[0].button.link=`http://localhost:8086/verify?email=${data.email}`;
+                    msg.html=sendmail.mailGenerator.generate(sendmail.email);
+                    console.log(sendmail.email.body.action[0].button.link);
+                    resolve (data,res);
+                }
+                else{
+                    reject(false);
+                    }      
+                }
+            });
+
+        }).then(async ()=>{
+
+            data.verified=false;
+            msg.to=data.email;
+            
+             userdb.create(data,function(err,result){
+                 if(err){
+                    return false;
+                 }else{
+                   console.log("user created : "+result);
+                   return msg;
+                 };
+                });
+            
+        }).then(()=>{
+            
+            try {
+                 sgMail.setApiKey(keys.sendmail.apiKeys);
+                 return sgMail.send(msg);
+              } catch (error) {
+                throw new Error(error.message)
+              }
+
+        });
+
        };
        
 /*---Create database function for the user  called in router-------*/  
   
    let  CreateUser=(data,res)=>{
-       
+          data.verified=false;
           userdb.create(data,function(err,result){
                if(err){
-                adduser
-                  res.send(err);
+                //  res.send(err);
                   return false;
        
                }else{
                  console.log("user created : "+result);
-                 res.sendFile(__dirname+'/public/login.html');
+                // res.sendFile(__dirname+'/public/login.html');
                  return true;
-              
                }
-       
               });
-       
        }
-
-
        passport.serializeUser((user,done)=>{
         done(null,user.id);
     });
@@ -163,7 +186,8 @@ var transport = nodemailer.createTransport({
     );
 
 //send mail through sendgrid
-    const sendMail = async () => {
+    const sendMail = async (msg) => {
+
         try {
           sgMail.setApiKey(keys.sendmail.apiKeys);
           return sgMail.send(msg)
@@ -173,18 +197,10 @@ var transport = nodemailer.createTransport({
     }
 
 //send maill through nodemailer
-  
-const mailOptions = {
-    to: 'ashwani.singh@daffodilsw.com',
-    from: 'ashwani9080singh@gmail.com',
-    subject: 'Test verification email',
-    html: sendmail.emailTemplate,
-    text: 'Hey this is ashwani sent you mail to check  nodemailer ', 
-};
+
 
 const nodeMailerSend=()=> {
 return new Promise((resolve,reject)=>{
-
 
     transport.sendMail(mailOptions,(err,info)=>{
         if (error) {
@@ -193,14 +209,27 @@ return new Promise((resolve,reject)=>{
             resolve(true);
     });
 
+        })
 
-})
+}
+
+const updateVerified=(data)=>{
+
+    return new Promise((resolve,reject)=>{
+        var myquery = { email: data };
+        var newvalues = { $set: {verified:true } };
+        userdb.updateOne(myquery, newvalues, function(err, res) {
+             if (err) throw reject(false);
+             else resolve(true);
+                 console.log("1 document updated"+res);
         
+  });
+    }).catch((err)=>console.log(err));
 
 
 }
+
   
 
-module.exports={Validate,CreateUser,Login,passport,GoogleStrategy,sendMail,nodeMailerSend};
+module.exports={Validate,CreateUser,Login,passport,GoogleStrategy,sendMail,nodeMailerSend,updateVerified};
     
-//AIzaSyD32VrRDm-7bz2CynW6iymk0QFwRHHDQd8

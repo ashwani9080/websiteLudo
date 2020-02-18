@@ -1,0 +1,18 @@
+<!-- <iframe src="https://cdn.forms-content.sg-form.com/5fb98e09-522e-11ea-8901-c6d331b73e82"/> -->
+
+<html>
+
+<body   >
+    <div id='email'  >verified</div>
+</body>
+<script>
+   let sendEmail=()=>{
+          var myParam = location.search.split('email=')[1];
+          document.getElementById('email').innerHTML+=myParam;
+          location.href='/verify';
+          
+   }
+
+</script>
+
+</html>

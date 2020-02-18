@@ -21,11 +21,14 @@ const email = {
       button: {
         color: '#33b5e5',
         text: 'Verify account',
-        link: 'http://192.168.100.121:8086/',
+        link: '',
       },
     },
   },
 }
+
+
+
 
 const emailTemplate = mailGenerator.generate(email);
 
@@ -38,9 +41,9 @@ var email2 = {
     }
  };
 
-const emailTemplate2=mailGenerator.generate(email2); 
+const emailTemplate2=mailGenerator.generatePlaintext(email2); 
 const emailText = mailGenerator.generatePlaintext(email);
 require('fs').writeFileSync('preview.html', emailTemplate ,'utf8');
 
 
-module.exports={emailTemplate,emailText,emailTemplate2};
+module.exports={emailTemplate,emailText,emailTemplate2,email,mailGenerator};

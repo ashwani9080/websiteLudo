@@ -6,7 +6,7 @@
             const validate=()=>{
 
                 if(document.getElementById('phone').value.length===10){
-                    console.log();
+                    location.href='/adduser'
                     return true;
                 }else{
                     alert("phone number is not valid");
@@ -21,7 +21,7 @@
     </head>
     <body>
         <div  class="body">
-            <form class="signup"  action="/adduser" method="POST" enctype="multipart/form-data">
+            <form class="signup"   method="POST" enctype="multipart/form-data">
                 <div style="color: aliceblue; font-size: 2em; padding-left: 2%;">COME AND SIGNUP</div>
                 <a   href="login.html" style="color: aliceblue; font-size: 1em; padding-left: 2%; margin-bottom: 20px;">Haven account ?<span style="color: rgb(236, 91, 72);">Login</span></a>
                 <label>Email</label>
