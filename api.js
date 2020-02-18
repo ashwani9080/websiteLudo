@@ -2,10 +2,32 @@ var userdb = require("./userscheam");
 const keys=require('./keys');
 const passport=require('passport');
 const GoogleStrategy=require('passport-google-oauth20');
+const nodemailer=require('nodemailer');
 const mongoose=require('mongoose');
-const sendmail=require('./sendMail');
+/*************sendgrid configuration is here******************/
+const sendmail=require('./template');
 const sgMail = require('@sendgrid/mail');
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+const msg = {
+    to: 'nancy@daffodilsw.com',
+    from: 'ashwani8090singh@gmail.com',
+    subject: 'Test verification email',
+    html: sendmail.emailTemplate,
+
+  }
+
+/*************node mailer configuration is here******************/
+
+var transport = nodemailer.createTransport({
+    host: "smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+      user: "1606c163243f16",
+      pass: "7a737408cf4807"
+    }
+  });  
 
 /*---login function for the user  called in router-------*/  
  let Login=(data)=>{
@@ -44,7 +66,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
   let   Validate=(data,req,res)=>{
 
-        console.log("user details: "+data.pic);
+        console.log("user details: "+data.email);
         data.pic=req.file.originalname;
           
            userdb.find({'email':''+data.email},'email',(err,email)=>{
@@ -57,6 +79,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
        
                }
                else{
+                   res.send('user alreay exists');
                    console.log("already exist: "+email.length);
                    return false;
                }
@@ -72,25 +95,13 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   
    let  CreateUser=(data,res)=>{
        
-       
-           userdb.create(data,function(err,result){
+          userdb.create(data,function(err,result){
                if(err){
                 adduser
                   res.send(err);
                   return false;
        
                }else{
-
-                const msg = {
-                    to: data.email,
-                    from: 'ashwani9080singh@gmail.com',
-                    subject: 'Test verification email',
-                    html: sendmail.emailTemplate,
-                
-                  }
-                  sendMail(msg);
-                
-       
                  console.log("user created : "+result);
                  res.sendFile(__dirname+'/public/login.html');
                  return true;
@@ -151,20 +162,45 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         })
     );
 
-//send mail
-    const sendMail = async (msg) => {
+//send mail through sendgrid
+    const sendMail = async () => {
         try {
-          sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+          sgMail.setApiKey(keys.sendmail.apiKeys);
           return sgMail.send(msg)
         } catch (error) {
           throw new Error(error.message)
         }
-      }
-      
-   
+    }
+
+//send maill through nodemailer
+  
+const mailOptions = {
+    to: 'ashwani.singh@daffodilsw.com',
+    from: 'ashwani9080singh@gmail.com',
+    subject: 'Test verification email',
+    html: sendmail.emailTemplate,
+    text: 'Hey this is ashwani sent you mail to check  nodemailer ', 
+};
+
+const nodeMailerSend=()=> {
+return new Promise((resolve,reject)=>{
 
 
+    transport.sendMail(mailOptions,(err,info)=>{
+        if (error) {
+            reject(error);
+                 }
+            resolve(true);
+    });
 
-module.exports={Validate,CreateUser,Login,passport,GoogleStrategy,sendMail};
+
+})
+        
+
+
+}
+  
+
+module.exports={Validate,CreateUser,Login,passport,GoogleStrategy,sendMail,nodeMailerSend};
     
 //AIzaSyD32VrRDm-7bz2CynW6iymk0QFwRHHDQd8

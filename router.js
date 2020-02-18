@@ -32,14 +32,15 @@ const authCheck=(req,res,next)=>{
 
 router.post("/login",async (req,res,next)=>{
   try{
-
   let resultfromlogin = await userapi.Login(req.body);
       if(resultfromlogin){
            res.sendFile(__dirname+"/Ludo-master/ludo.html"); 
           }else{
           console.log("called false");
+          res.send('sorry');
         }
     }catch(err){
+      res.send(err);
       console.log("error message: "+err);
     }   
   });
@@ -57,7 +58,7 @@ router.get('/',(req,res)=>{
 router.post("/adduser", upload.single('pic'),(req,res,next)=>{
 
   userapi.Validate(req.body,req,res);  
-  next();  
+  
     
 });
 
@@ -72,26 +73,38 @@ router.post("/adduser", upload.single('pic'),(req,res,next)=>{
 
     res.redirect( `/ludo?origin=${req.originalUrl}`);
 
-  });
+  });    
 
 
   router.get('/ludo',(req,res)=>{
     res.sendFile(__dirname+"/Ludo-master/ludo.html"); 
-    
   });
 
 
-  router.post('/adduser', async (req, res) => {
+  router.get('/sendmail', async (req, res) => {
     try {
-      const sent = await userapi.sendMail()
+      const sent = await userapi.sendMail();
       if (sent) {
         res.send({ message: 'email sent successfully' })
       }
     } catch (error) {
-      throw new Error(error.message)
+      res.send(error);
+      
     }
   });
 
+
+  router.get('/nodemailer',async (req,res)=>{
+
+    try{  
+    const sent =await userapi.nodeMailerSend();
+    console.log('called'+sent);
+    if(sent)
+      res.send({ message: 'email sent successfully' });
+    }catch(err){
+      res.send(err);
+    }
+  })
 
 module.exports=router;
 

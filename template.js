@@ -5,16 +5,15 @@ const mailGenerator = new MailGen({
   theme: 'salted',
   product: {
     name: 'WebsiteLudo',
-    link: 'http://localhost:8086/',
-     logo: 'http://localhost:8086/rsz_1.png'
+    link: 'http://192.168.100.121:8086/',
+     logo: 'http://192.168.100.121:8086/rsz_1.png'
   },
 })
 
 const email = {
   body: {
     name: 'Ashwani Thakur',
-    //intro: 'Welcome to WebsiteLudo',
-    intro: ['Welcome to Mailgen!', 'We\'re very excited to have you on board.'],
+    intro: 'Welcome to WebsiteLudo',
     outro: ['Need help, or have questions?', 'Just reply to this email, we\'d love to help.'],
     
     action: {
@@ -22,7 +21,7 @@ const email = {
       button: {
         color: '#33b5e5',
         text: 'Verify account',
-        link: 'http://localhost:8086/',
+        link: 'http://192.168.100.121:8086/',
       },
     },
   },

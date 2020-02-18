@@ -15,7 +15,11 @@ app.use(bodyParser.json());
 // app.use(cors()) ; 
 
 mongoose.connect('mongodb://localhost:27017/webdatabase',
-{useNewUrlParser:true,useUnifiedTopology:true});
+{ useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+}).then(()=>{console.log('connected to db')}).catch(err=>{console.log(err)});
 
 
 app.use(cookiesSession({
@@ -31,9 +35,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.static(path.join(__dirname,'Ludo-master')));
 app.use(express.static(path.join(__dirname,'images')));
 app.use("/",router);
-
-
-
 app.listen(8086,function(req,res){
 
     console.log("connected");
