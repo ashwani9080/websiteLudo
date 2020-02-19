@@ -35,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.static(path.join(__dirname,'Ludo-master')));
 app.use(express.static(path.join(__dirname,'images')));
 app.use("/",router);
+
 app.listen(8086,function(req,res){
 
     console.log("connected");

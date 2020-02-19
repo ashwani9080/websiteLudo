@@ -45,7 +45,7 @@ router.get('/verify',async (req,res)=>{
       }else{
         res.send('error');
       }
-    }catch(err){
+    }catch(err){  
 
       res.send(err);
     }
@@ -82,6 +82,7 @@ router.get('/',(req,res)=>{
 
 
 router.post("/adduser", upload.single('pic'), async (req,res)=>{
+  
   try{
     let checkValidated= await userapi.Validate(req.body,req,res);
 

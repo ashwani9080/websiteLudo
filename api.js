@@ -5,11 +5,9 @@ const passport=require('passport');
 const GoogleStrategy=require('passport-google-oauth20');
 const nodemailer=require('nodemailer');
 const mongoose=require('mongoose');
-
 /*************sendgrid configuration is here******************/
 const sendmail=require('./template');
 const sgMail = require('@sendgrid/mail');
-
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const msg = {
