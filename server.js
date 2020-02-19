@@ -8,7 +8,7 @@ const keys=require('./keys.js');
 const cors = require("cors");
 const cookiesSession=require('cookie-session');
 const passport=require('passport');
-
+const port =process.env.PORT || 8086;
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname,'images')));
 app.use("/",router);
 
-app.listen(8086,function(req,res){
+app.listen(port,function(req,res){
 
     console.log("connected");
 
