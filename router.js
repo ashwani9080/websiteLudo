@@ -120,30 +120,30 @@ router.post("/adduser", upload.single('pic'), async (req,res)=>{
   });
 
 
-  router.get('/sendmail', async (req, res) => {
-    try {
-      const sent = await userapi.sendMail();
-      if (sent) {
-        res.send({ message: 'email sent successfully' })
-      }
-    } catch (error) {
-      res.send(error);
+  // router.get('/sendmail', async (req, res) => {
+  //   try {
+  //     const sent = await userapi.sendMail();
+  //     if (sent) {
+  //       res.send({ message: 'email sent successfully' })
+  //     }
+  //   } catch (error) {
+  //     res.send(error);
       
-    }
-  });
+  //   }
+  // });
 
 
-  router.get('/nodemailer',async (req,res)=>{
+  // router.get('/nodemailer',async (req,res)=>{
 
-    try{  
-    const sent =await userapi.nodeMailerSend();
-    console.log('called'+sent);
-    if(sent)
-      res.send({ message: 'email sent successfully' });
-    }catch(err){
-      throw new Error(error.message)
-    }
-  })
+  //   try{  
+  //   const sent =await userapi.nodeMailerSend();
+  //   console.log('called'+sent);
+  //   if(sent)
+  //     res.send({ message: 'email sent successfully' });
+  //   }catch(err){
+  //     throw new Error(error.message)
+  //   }
+  // })
 
 module.exports=router;
 
